@@ -1,0 +1,9 @@
+curl --output vbox.exe "https://download.virtualbox.org/virtualbox/5.2.22/VirtualBox-5.2.22-126460-Win.exe"
+vbox.exe --extract --path=.\vbox --silent
+dir /b /a-d vbox>text.txt
+
+FOR /F "tokens=* USEBACKQ" %%F IN (`findstr amd64 text.txt`) DO (
+SET var=%%F
+)
+ECHO %var%
+msiexec /qb /l* log.txt /i vbox\%var%
